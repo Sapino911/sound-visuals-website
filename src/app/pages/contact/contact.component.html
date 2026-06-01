@@ -10,42 +10,71 @@
 
   <div class="contact-layout">
     <mat-card appearance="outlined" class="contact-card">
-      <form>
+      <form [formGroup]="contactForm" (ngSubmit)="submitEnquiry()" novalidate>
         <div class="field-row">
           <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
-            <input matInput type="text" autocomplete="name">
+            <input matInput type="text" formControlName="name" autocomplete="name">
+            @if (hasError('name', 'required')) {
+              <mat-error>Name is required.</mat-error>
+            }
+            @if (hasError('name', 'minlength')) {
+              <mat-error>Please enter at least 2 characters.</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input matInput type="email" autocomplete="email">
+            <input matInput type="email" formControlName="email" autocomplete="email">
+            @if (hasError('email', 'required')) {
+              <mat-error>Email is required.</mat-error>
+            }
+            @if (hasError('email', 'email')) {
+              <mat-error>Enter a valid email address.</mat-error>
+            }
           </mat-form-field>
         </div>
 
         <div class="field-row">
           <mat-form-field appearance="outline">
             <mat-label>Event type</mat-label>
-            <mat-select>
+            <mat-select formControlName="eventType">
               <mat-option value="corporate">Corporate event</mat-option>
               <mat-option value="launch">Product launch</mat-option>
               <mat-option value="live">Live production</mat-option>
               <mat-option value="private">Private function</mat-option>
             </mat-select>
+            @if (hasError('eventType', 'required')) {
+              <mat-error>Select an event type.</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Event date</mat-label>
-            <input matInput type="date">
+            <input matInput type="date" formControlName="eventDate">
+            @if (hasError('eventDate', 'required')) {
+              <mat-error>Event date is required.</mat-error>
+            }
           </mat-form-field>
         </div>
 
         <mat-form-field appearance="outline">
           <mat-label>Project details</mat-label>
-          <textarea matInput rows="6" placeholder="Venue, audience size, services required, timing and any technical notes"></textarea>
+          <textarea
+            matInput
+            rows="6"
+            formControlName="details"
+            placeholder="Venue, audience size, services required, timing and any technical notes"
+          ></textarea>
+          @if (hasError('details', 'required')) {
+            <mat-error>Project details are required.</mat-error>
+          }
+          @if (hasError('details', 'minlength')) {
+            <mat-error>Please add at least 20 characters.</mat-error>
+          }
         </mat-form-field>
 
-        <button mat-flat-button color="primary" type="button">
+        <button mat-flat-button color="primary" type="submit" [disabled]="contactForm.invalid && submitted">
           <mat-icon aria-hidden="true">send</mat-icon>
           Send enquiry
         </button>
@@ -56,15 +85,15 @@
       <h2>Production desk</h2>
       <div class="info-item">
         <mat-icon aria-hidden="true">mail</mat-icon>
-        <span>hello&#64;soundvisuals.co.za</span>
+        <span>enquiry&#64;soundvisuals.otcmvs.co.za</span>
       </div>
       <div class="info-item">
         <mat-icon aria-hidden="true">call</mat-icon>
-        <span>+27 11 555 0184</span>
+        <span>+27 81 555 0184</span>
       </div>
       <div class="info-item">
         <mat-icon aria-hidden="true">place</mat-icon>
-        <span>Johannesburg base, national delivery</span>
+        <span>210 Robert Sobukwe Street, Sunnyside Gallaries, Pretoria</span>
       </div>
       <p>
         For urgent show-day support, call the production desk directly so the right technician can respond.
