@@ -1,1 +1,54 @@
-<p>navbar works!</p>
+<mat-toolbar class="site-nav">
+  <a class="brand" routerLink="/" aria-label="Sound and Visuals home" (click)="closeMenu()">
+    <span class="brand-mark">
+      <mat-icon aria-hidden="true">graphic_eq</mat-icon>
+    </span>
+    <span>
+      <strong>Sound & Visuals Mutliverse</strong>
+      <small>Event AV Production</small>
+    </span>
+  </a>
+
+  <nav class="desktop-links" aria-label="Primary navigation">
+    @for (item of navItems; track item.path) {
+      <a
+        mat-button
+        [routerLink]="item.path"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+      >
+        {{ item.label }}
+      </a>
+    }
+  </nav>
+
+  <a class="quote-link" mat-flat-button color="primary" routerLink="/contact">Get a quote</a>
+
+  <button
+    class="menu-button"
+    mat-icon-button
+    type="button"
+    aria-label="Toggle navigation"
+    [attr.aria-expanded]="menuOpen"
+    (click)="toggleMenu()"
+  >
+    <mat-icon>{{ menuOpen ? 'close' : 'menu' }}</mat-icon>
+  </button>
+</mat-toolbar>
+
+@if (menuOpen) {
+  <nav class="mobile-links panel" aria-label="Mobile navigation">
+    @for (item of navItems; track item.path) {
+      <a
+        mat-button
+        [routerLink]="item.path"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+        (click)="closeMenu()"
+      >
+        {{ item.label }}
+      </a>
+    }
+    <a mat-flat-button color="primary" routerLink="/contact" (click)="closeMenu()">Get a quote</a>
+  </nav>
+}

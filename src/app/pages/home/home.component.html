@@ -1,1 +1,53 @@
-<p>home works!</p>
+<section class="hero">
+  <div class="hero-media" aria-hidden="true"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Sound | Lighting | Visual Production</p>
+    <h1>Event technology that makes every moment land.</h1>
+    <p class="lead">
+      We design, supply and operate professional audio visual systems for corporate events,
+      live productions, launches and premium private functions.
+    </p>
+    <div class="hero-actions">
+      <a mat-flat-button color="primary" routerLink="/contact">
+        <mat-icon aria-hidden="true">send</mat-icon>
+        Request a quote
+      </a>
+      <a mat-stroked-button routerLink="/portfolio">
+        <mat-icon aria-hidden="true">play_circle</mat-icon>
+        View work
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="page intro-section">
+  <div class="grid grid-3 stats">
+    @for (item of highlights; track item.label) {
+      <div class="stat panel">
+        <strong>{{ item.value }}</strong>
+        <span>{{ item.label }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="section-split">
+    <div>
+      <p class="eyebrow">Production partner</p>
+      <h2>Precision AV for brands, venues and event teams.</h2>
+    </div>
+    <p>
+      From the first site visit to the final cue, our crew builds systems that are reliable,
+      polished and easy for presenters, artists and producers to trust.
+    </p>
+  </div>
+
+  <div class="grid grid-3">
+    @for (service of services; track service.title) {
+      <mat-card appearance="outlined" class="service-card">
+        <mat-icon aria-hidden="true">{{ service.icon }}</mat-icon>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.text }}</p>
+      </mat-card>
+    }
+  </div>
+</section>

@@ -1,1 +1,25 @@
-<p>services works!</p>
+<section class="page">
+  <div class="page-header">
+    <p class="eyebrow">Services</p>
+    <h1>Complete AV services for polished, high-pressure events.</h1>
+    <p class="lead">
+      Hire one specialist discipline or bring us in as your full technical production partner.
+      Every package is scoped around venue, audience, content and run-of-show.
+    </p>
+  </div>
+
+  <div class="grid grid-3">
+    @for (service of services; track service.title) {
+      <mat-card appearance="outlined" class="service-card">
+        <mat-icon aria-hidden="true">{{ service.icon }}</mat-icon>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.text }}</p>
+        <mat-chip-set aria-label="Service capabilities">
+          @for (tag of service.tags; track tag) {
+            <mat-chip>{{ tag }}</mat-chip>
+          }
+        </mat-chip-set>
+      </mat-card>
+    }
+  </div>
+</section>

@@ -1,1 +1,74 @@
-<p>contact works!</p>
+<section class="page">
+  <div class="page-header">
+    <p class="eyebrow">Contact</p>
+    <h1>Tell us what you are planning.</h1>
+    <p class="lead">
+      Share the date, venue, audience size and production needs. We will respond with a practical
+      AV recommendation and next steps.
+    </p>
+  </div>
+
+  <div class="contact-layout">
+    <mat-card appearance="outlined" class="contact-card">
+      <form>
+        <div class="field-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" autocomplete="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" autocomplete="email">
+          </mat-form-field>
+        </div>
+
+        <div class="field-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Event type</mat-label>
+            <mat-select>
+              <mat-option value="corporate">Corporate event</mat-option>
+              <mat-option value="launch">Product launch</mat-option>
+              <mat-option value="live">Live production</mat-option>
+              <mat-option value="private">Private function</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Event date</mat-label>
+            <input matInput type="date">
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Project details</mat-label>
+          <textarea matInput rows="6" placeholder="Venue, audience size, services required, timing and any technical notes"></textarea>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="button">
+          <mat-icon aria-hidden="true">send</mat-icon>
+          Send enquiry
+        </button>
+      </form>
+    </mat-card>
+
+    <aside class="panel contact-info">
+      <h2>Production desk</h2>
+      <div class="info-item">
+        <mat-icon aria-hidden="true">mail</mat-icon>
+        <span>hello&#64;soundvisuals.co.za</span>
+      </div>
+      <div class="info-item">
+        <mat-icon aria-hidden="true">call</mat-icon>
+        <span>+27 11 555 0184</span>
+      </div>
+      <div class="info-item">
+        <mat-icon aria-hidden="true">place</mat-icon>
+        <span>Johannesburg base, national delivery</span>
+      </div>
+      <p>
+        For urgent show-day support, call the production desk directly so the right technician can respond.
+      </p>
+    </aside>
+  </div>
+</section>

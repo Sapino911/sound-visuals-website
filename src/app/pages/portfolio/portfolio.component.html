@@ -1,1 +1,34 @@
-<p>portfolio works!</p>
+<section class="page">
+  <div class="page-header">
+    <p class="eyebrow">Portfolio</p>
+    <h1>Recent production work across corporate and live environments.</h1>
+    <p class="lead">
+      A sample of the event formats we support, from executive rooms to large-format branded experiences.
+    </p>
+  </div>
+
+  <div class="feature-project panel">
+    <img src="/av-production-hero.png" alt="Corporate event stage with LED wall, audio and lighting production">
+    <div>
+      <p class="eyebrow">Featured setup</p>
+      <h2>Integrated stage, screen and sound package</h2>
+      <p>
+        A premium indoor event environment with show-ready audio, lighting, LED wall support,
+        presenter comfort monitors and technical operation from doors to close.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid grid-2 project-grid">
+    @for (project of projects; track project.title) {
+      <mat-card appearance="outlined" class="project-card">
+        <mat-icon aria-hidden="true">campaign</mat-icon>
+        <div>
+          <p class="project-type">{{ project.type }}</p>
+          <h3>{{ project.title }}</h3>
+          <p>{{ project.detail }}</p>
+        </div>
+      </mat-card>
+    }
+  </div>
+</section>

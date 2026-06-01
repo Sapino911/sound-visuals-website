@@ -1,1 +1,39 @@
-<p>about works!</p>
+<section class="page">
+  <div class="page-header">
+    <p class="eyebrow">About us</p>
+    <h1>Built for events where quality and reliability matter.</h1>
+    <p class="lead">
+      Sound & Visuals is an audio visual production company supporting event agencies,
+      corporate teams, venues and private clients with complete technical delivery.
+    </p>
+  </div>
+
+  <div class="about-layout">
+    <div class="panel story">
+      <h2>We turn ambitious briefs into controlled productions.</h2>
+      <p>
+        Our team blends technical planning with practical show-floor experience. We help clients
+        choose the right equipment, build clean stage layouts, manage signal paths and operate
+        the show with a calm, professional presence.
+      </p>
+      <p>
+        Whether the room needs crisp speech reinforcement, a dramatic reveal, branded screen
+        content or hybrid streaming, we focus on systems that work beautifully under pressure.
+      </p>
+    </div>
+
+    <div class="crew-panel">
+      <img src="/av-production-hero.png" alt="Professional sound and visual production equipment in an event venue">
+    </div>
+  </div>
+
+  <div class="grid grid-3 values">
+    @for (value of values; track value.title) {
+      <mat-card appearance="outlined" class="value-card">
+        <mat-icon aria-hidden="true">{{ value.icon }}</mat-icon>
+        <h3>{{ value.title }}</h3>
+        <p>{{ value.text }}</p>
+      </mat-card>
+    }
+  </div>
+</section>

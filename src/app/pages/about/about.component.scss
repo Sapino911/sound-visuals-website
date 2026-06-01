@@ -1,0 +1,54 @@
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.story {
+  padding: 34px;
+}
+
+.crew-panel {
+  min-height: 420px;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+}
+
+.crew-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.values {
+  margin-top: 28px;
+}
+
+.value-card {
+  padding: 24px;
+}
+
+.value-card mat-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 20px;
+  color: var(--color-accent);
+  font-size: 40px;
+}
+
+@media (max-width: 840px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .story {
+    padding: 24px;
+  }
+
+  .crew-panel {
+    min-height: 280px;
+  }
+}
