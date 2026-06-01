@@ -29,6 +29,25 @@ button {
   min-height: 48px;
 }
 
+.form-message {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.form-message.success {
+  border: 1px solid rgba(140, 224, 168, 0.35);
+  background: rgba(140, 224, 168, 0.1);
+  color: var(--color-success);
+}
+
+.form-message.error {
+  border: 1px solid rgba(255, 112, 112, 0.35);
+  background: rgba(255, 112, 112, 0.1);
+  color: #ffb0b0;
+}
+
 .contact-info {
   display: grid;
   gap: 18px;

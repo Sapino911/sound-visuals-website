@@ -74,9 +74,17 @@
           }
         </mat-form-field>
 
-        <button mat-flat-button color="primary" type="submit" [disabled]="contactForm.invalid && submitted">
-          <mat-icon aria-hidden="true">send</mat-icon>
-          Send enquiry
+        @if (successMessage) {
+          <p class="form-message success">{{ successMessage }}</p>
+        }
+
+        @if (errorMessage) {
+          <p class="form-message error">{{ errorMessage }}</p>
+        }
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="sending">
+          <mat-icon aria-hidden="true">{{ sending ? 'hourglass_top' : 'send' }}</mat-icon>
+          {{ sending ? 'Sending...' : 'Send enquiry' }}
         </button>
       </form>
     </mat-card>
@@ -85,7 +93,7 @@
       <h2>Production desk</h2>
       <div class="info-item">
         <mat-icon aria-hidden="true">mail</mat-icon>
-        <span>contact&#64;soundvisuals.otcmvs.co.za</span>
+        <span>soundvisuals&#64;otcmvs.co.za</span>
       </div>
       <div class="info-item">
         <mat-icon aria-hidden="true">call</mat-icon>

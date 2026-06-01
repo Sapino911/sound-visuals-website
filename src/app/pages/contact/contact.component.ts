@@ -1,3 +1,4 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,8 +25,12 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class ContactComponent {
   private readonly fb = inject(FormBuilder);
+  private readonly http = inject(HttpClient);
 
   protected submitted = false;
+  protected sending = false;
+  protected successMessage = '';
+  protected errorMessage = '';
 
   protected readonly contactForm = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
@@ -42,6 +47,8 @@ export class ContactComponent {
 
   protected submitEnquiry(): void {
     this.submitted = true;
+    this.successMessage = '';
+    this.errorMessage = '';
 
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
@@ -49,20 +56,20 @@ export class ContactComponent {
     }
 
     const enquiry = this.contactForm.getRawValue();
-    const subject = `AV enquiry: ${this.getEventTypeLabel(enquiry.eventType)} on ${enquiry.eventDate}`;
-    const body = [
-      `Name: ${enquiry.name}`,
-      `Email: ${enquiry.email}`,
-      `Event type: ${this.getEventTypeLabel(enquiry.eventType)}`,
-      `Event date: ${enquiry.eventDate}`,
-      '',
-      'Project details:',
-      enquiry.details
-    ].join('\n');
+    this.sending = true;
 
-    window.location.href = `mailto:contact@soundvisuals.otcmvs.co.za?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    this.contactForm.reset();
-    this.submitted = false;
+    this.http.post<{ message: string; id: string }>('/api/contact', enquiry).subscribe({
+      next: (response) => {
+        this.successMessage = response.message;
+        this.contactForm.reset();
+        this.submitted = false;
+        this.sending = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.errorMessage = error.error?.message || 'Unable to send your enquiry. Please try again.';
+        this.sending = false;
+      }
+    });
   }
 
   private getEventTypeLabel(value: string): string {
