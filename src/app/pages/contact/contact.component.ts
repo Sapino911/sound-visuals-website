@@ -60,7 +60,7 @@ export class ContactComponent {
       enquiry.details
     ].join('\n');
 
-    window.location.href = `mailto:hello@soundvisuals.co.za?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:contact@soundvisuals.otcmvs.co.za?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     this.contactForm.reset();
     this.submitted = false;
   }
