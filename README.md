@@ -14,6 +14,23 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+## Deploying to Render
+
+This project can be deployed to Render as a single Node web service.
+
+1. Create a new web service on Render and connect your repository.
+2. Set the build command to `npm run build`.
+3. Set the start command to `npm run api`.
+4. Add environment variables on Render for SMTP and email delivery:
+   - `SMTP_HOST`
+   - `SMTP_PORT`
+   - `SMTP_SECURE`
+   - `SMTP_USER`
+   - `SMTP_PASS`
+   - `CONTACT_EMAIL`
+   - `SMTP_FROM` (optional)
+5. Use the health check path `/api/health`.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: sound-visuals-website
+    env: node
+    plan: free
+    branch: master
+    buildCommand: npm run build
+    startCommand: npm run api
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production

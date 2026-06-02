@@ -16,6 +16,8 @@ const SMTP_PASS = process.env.SMTP_PASS;
 const SMTP_FROM = process.env.SMTP_FROM || CONTACT_EMAIL;
 const DATA_DIR = path.join(__dirname, 'data');
 const SUBMISSIONS_FILE = path.join(DATA_DIR, 'contact-submissions.jsonl');
+const PUBLIC_DIR = path.join(__dirname, 'dist', 'sound-visuals-website');
+const FALLBACK_FILE = path.join(PUBLIC_DIR, 'index.html');
 
 const allowedOrigins = new Set([
   'http://localhost:4200',
@@ -31,6 +33,63 @@ function setCorsHeaders(req, res) {
 
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+}
+
+function getContentType(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+
+  return {
+    '.html': 'text/html; charset=UTF-8',
+    '.js': 'application/javascript; charset=UTF-8',
+    '.css': 'text/css; charset=UTF-8',
+    '.json': 'application/json; charset=UTF-8',
+    '.svg': 'image/svg+xml',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.ico': 'image/x-icon',
+    '.woff': 'font/woff',
+    '.woff2': 'font/woff2',
+    '.ttf': 'font/ttf',
+    '.eot': 'application/vnd.ms-fontobject',
+    '.otf': 'font/otf'
+  }[ext] || 'application/octet-stream';
+}
+
+function serveStaticFile(req, res, urlPath) {
+  const requestedPath = urlPath === '/' ? '/index.html' : decodeURIComponent(urlPath);
+  const filePath = path.normalize(path.join(PUBLIC_DIR, requestedPath));
+
+  if (!filePath.startsWith(PUBLIC_DIR)) {
+    sendJson(res, 400, { message: 'Bad request.' });
+    return;
+  }
+
+  fs.promises.stat(filePath)
+    .then((stats) => {
+      if (!stats.isFile()) {
+        throw new Error('Not a file');
+      }
+
+      const contentType = getContentType(filePath);
+      res.writeHead(200, { 'Content-Type': contentType });
+      fs.createReadStream(filePath)
+        .on('error', () => sendJson(res, 500, { message: 'Unable to read file.' }))
+        .pipe(res);
+    })
+    .catch(() => {
+      fs.promises.stat(FALLBACK_FILE)
+        .then(() => {
+          res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
+          fs.createReadStream(FALLBACK_FILE)
+            .on('error', () => sendJson(res, 500, { message: 'Unable to read file.' }))
+            .pipe(res);
+        })
+        .catch(() => {
+          sendJson(res, 500, { message: 'Application not built. Run npm run build first.' });
+        });
+    });
 }
 
 function sendJson(res, statusCode, payload) {
@@ -238,7 +297,10 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  if (req.method === 'GET' && req.url === '/api/health') {
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  const pathname = url.pathname;
+
+  if (req.method === 'GET' && pathname === '/api/health') {
     sendJson(res, 200, {
       status: 'ok',
       smtpConfigured: isSmtpConfigured()
@@ -246,8 +308,13 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  if (req.method === 'POST' && req.url === '/api/contact') {
+  if (req.method === 'POST' && pathname === '/api/contact') {
     await handleContact(req, res);
+    return;
+  }
+
+  if (req.method === 'GET' || req.method === 'HEAD') {
+    serveStaticFile(req, res, pathname);
     return;
   }
 
